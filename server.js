@@ -20,8 +20,8 @@ function isAllowedUrl(url) {
   }
 }
 
-app.get('/proxy', async (req, res) => {
-  const targetUrl = req.query.url;
+app.post('/proxy', async (req, res) => {
+  const targetUrl = req.body.url;
 
   if (!targetUrl || !isAllowedUrl(targetUrl)) {
     return res.status(400).json({ error: 'Invalid or disallowed URL' });
@@ -34,7 +34,7 @@ app.get('/proxy', async (req, res) => {
     const data = await response.text();
     res.send(data);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch the resource' });
+    res.status(500).json({ error: `Failed to fetch the resource\nURL:${targetUrl}` });
   }
 });
 
