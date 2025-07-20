@@ -38,6 +38,8 @@ app.post('/proxy', async (req, res) => {
   }
 });
 
+app.use(express.json());
+
 app.listen(PORT, () => {
   console.log(`Proxy server running on port ${PORT}`);
 });
