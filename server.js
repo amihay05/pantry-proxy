@@ -23,6 +23,9 @@ function isAllowedUrl(url) {
 
 app.post('/proxy', async (req, res) => {
   const targetUrl = req.body.url;
+  const functionName = req.body.func;
+  //const httpMethod = req.body.method;
+  //const body = req.body.body;
 
   console.log('Received proxy request for URL:', targetUrl); // Log incoming URL
 
@@ -36,11 +39,11 @@ app.post('/proxy', async (req, res) => {
 
   // --- Timeout implementation for fetch (optional, but good for robustness) ---
   const controller = new AbortController();
-  const timeout = 10000; // 10 seconds timeout
+  const timeout = 100000; // 100 seconds timeout
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await fetch(targetUrl, { signal: controller.signal });
+    const response = await fetch(`${targetUrl}/${functionName}`, { signal: controller.signal });
     clearTimeout(timeoutId); // Clear timeout if fetch succeeds
 
     const contentType = response.headers.get('content-type');
