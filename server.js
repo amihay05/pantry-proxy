@@ -9,7 +9,7 @@ app.use(cors());
 
 app.get('/answers', async (req, res) => {
   try {
-    const response = await fetch('https://getpantry.cloud/apiv1/pantry/ege7d7dh6fh6/basket/answers0');
+    const response = await fetch(req.path);
     const data = await response.json();
     res.json(data);
   } catch (err) {
